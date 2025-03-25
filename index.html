@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Append File Contents</title>
+    <script>
+        async function appendFiles(event) {
+            event.preventDefault();
+            const file1 = document.getElementById("file1").value;
+            const file2 = document.getElementById("file2").value;
+            const response = await fetch("/append-files", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `file1=${encodeURIComponent(file1)}&file2=${encodeURIComponent(file2)}`
+            });
+            const result = await response.text();
+            document.getElementById("result").innerText = result;
+        }
+    </script>
+</head>
+<body>
+    <h2>Append File Contents</h2>
+    <form onsubmit="appendFiles(event)">
+        <label for="file1">Enter First File Name:</label>
+        <input type="text" id="file1" name="file1" required>
+        <br><br>
+        
+        <label for="file2">Enter Second File Name:</label>
+        <input type="text" id="file2" name="file2" required>
+        <br><br>
+
+        <button type="submit">Append</button>
+    </form>
+
+    <p id="result"></p>
+</body>
+</html>
